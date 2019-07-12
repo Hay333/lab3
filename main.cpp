@@ -1,28 +1,28 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 int main(int argc, char **argv)
 {
-	int x;
-	string d = "верблюд";
-	string da= "верблюда";
-	string dov= "верблюдов";
-	while(cin >> x) {
-		if (x<1||x>100) {
-			cout<<"Колличество верблюдов в караване должно не меньше 1 и не больше 100"<<endl;
+	string soobshenie = "deb http://mirror.mephi.ru/debian/ stretch main contrib non-free\ndeb-src http://mirror.mephi.ru/debian/ stretch main contrib non-free\ndeb http://security.debian.org/ stretch/updates main contrib non-free\ndeb-src http://security.debian.org/ stretch/updates main contrib non-free\ndeb http://mirror.mephi.ru/debian/ stretch-updates main contrib non-free\ndeb-src http://mirror.mephi.ru/debian/ stretch-updates main contrib non-free\ndeb http://mirror.mephi.ru/debian stretch-backports main contrib non-free\ndeb-src http://mirror.mephi.ru/debian stretch-backports main contrib non-free";
+	int chisla,bukvi,drugoe;
+	chisla=0;
+	bukvi=0;
+	drugoe=0;
+	for (int i = 0; i < soobshenie.length(); i++) {
+		if (soobshenie[i] == ' '|| soobshenie[i] == '\n')
 			continue;
-		} else if (x==11||x==12||x==13||x==14) {
-			cout<<"В караване было "<<x<<" "<<dov<<endl;
-		} else if (x%10==0) {
-			cout<<"В караване был "<<x<<" "<<dov<<endl;
-		} else if (x%10>=5&&x%10<=9) {
-			cout<<"В караване было "<<x<<" "<<dov<<endl;
-		} else if (x%10==1) {
-			cout<<"В караване было "<<x<<" "<<d<< endl;
-		} else if (x%10>=2&&x%10<=4) {
-			cout<<"В караване было "<<x<<" "<<da<< endl;
-		}
+		else if (soobshenie[i] >= '0' && soobshenie[i] <= '9')
+			chisla=++chisla;
+		else if ((soobshenie[i] >= 'a' && soobshenie[i] <= 'z') || (soobshenie[i] >= 'A' && soobshenie[i] <= 'Z'))
+			bukvi=++bukvi;
+		else
+			drugoe=++drugoe;
 	}
+	cout << "Чисел в тексте:" <<chisla<< endl;
+	cout << "Букв в тексте:" <<bukvi<< endl;
+	cout << "Другое:" <<drugoe<< endl;
+	cout << "Общее колличество символов в тексте(кроме пробелов):" <<chisla+bukvi+drugoe<< endl;
 	return 0;
 }
