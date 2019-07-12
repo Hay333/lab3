@@ -1,28 +1,63 @@
+
 #include <iostream>
-#include <string>
+#include <locale>
+
 using namespace std;
 
-int main(int argc, char **argv)
-{
-	int x;
-	string d = "верблюд";
-	string da= "верблюда";
-	string dov= "верблюдов";
-	while(cin >> x) {
-		if (x<1||x>100) {
-			cout<<"Колличество верблюдов в караване должно не меньше 1 и не больше 100"<<endl;
-			continue;
-		} else if (x==11||x==12||x==13||x==14) {
-			cout<<"В караване было "<<x<<" "<<dov<<endl;
-		} else if (x%10==0) {
-			cout<<"В караване был "<<x<<" "<<dov<<endl;
-		} else if (x%10>=5&&x%10<=9) {
-			cout<<"В караване было "<<x<<" "<<dov<<endl;
-		} else if (x%10==1) {
-			cout<<"В караване было "<<x<<" "<<d<< endl;
-		} else if (x%10>=2&&x%10<=4) {
-			cout<<"В караване было "<<x<<" "<<da<< endl;
+wstring decrypt(const std::wstring& text, const int key);
+wstring toUpperCase(const wstring& input);
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	locale loc("ru_RU.UTF-8");
+	locale::global(loc);
+	
+	wstring str = L"ФХНСКХ";
+	wcout << L"Введите ключ расшифровки" << endl;
+	int key;
+	cin >> key;
+	str = toUpperCase(str);
+	if (str==L"") {
+		wcout << L"ОШИБКА" << endl;
+		return -1;
+	}
+	str = decrypt(str, key);
+	
+	wcout << str << endl;
+	return 0;
+}
+
+wstring decrypt(const std::wstring& text, const int key) {
+
+	locale loc("ru_RU.UTF-8");
+	wstring output = L"";
+	const int LAUNGUAGE_SIZE = 32;
+
+	for (wchar_t c : text) {
+			if (c - key < L'А') {
+				c += LAUNGUAGE_SIZE - key;
+			}
+			else {
+				c -= key;
+			}
+			output += c;
+	}
+	return output;
+}
+
+wstring toUpperCase(const wstring & input) {	
+	locale loc("ru_RU.UTF-8");
+	wstring output = L"";
+	for (wchar_t c : input) {
+		if ((L'А' <= c && c <= L'Я') || (L'а' <= c && c <= L'я')) {
+			if (L'а' <= c && c <= L'я') {
+				output += toupper(c, loc);
+			} else {
+				output += c;
+			}
+		} else {
+			return L"";
 		}
 	}
-	return 0;
+	return output;
 }
